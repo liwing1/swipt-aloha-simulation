@@ -15,15 +15,15 @@ function res = simulation(numberDevices, arrivalRate, slots)
 %laço principal em que cada incremento é a representação de um tempo de slot
   for t = 1:slots
 
-    %device = packetGeneration(numberDevices, arrivalRate, device);
+    device = packetGeneration(numberDevices, arrivalRate, device);
 
     for i = 1:numberDevices
       if(device(i).packet == 1)
         device(i).battery = 0;
         idxLastTx = i;
         cont_tx_slot(t) = cont_tx_slot(t) + 1;
-      else
-        device(i).packet = packetGeneration(arrivalRate);
+      %else
+        %device(i).packet = packetGeneration(arrivalRate);
       endif
     endfor
 
