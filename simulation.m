@@ -14,35 +14,38 @@ function res = simulation(numberDevices, arrivalRate, slots)
 
 %laço principal em que cada incremento é a representação de um tempo de slot
   for t = 1:slots
-    device = packetGeneration(numberDevices, arrivalRate, device);
+
+    %device = packetGeneration(numberDevices, arrivalRate, device);
+
     for i = 1:numberDevices
-      if(device(i).packet == 1 && device(i).battery == 1)
+      if(device(i).packet == 1)
         device(i).battery = 0;
         idxLastTx = i;
         cont_tx_slot(t) = cont_tx_slot(t) + 1;
+      else
+        device(i).packet = packetGeneration(arrivalRate);
       endif
     endfor
 
     C = C + cont_tx_slot(t);  %C = Total de transmissoes
 
-    if (cont_tx_slot(t) > 0)  %Transmitiu algum pkt entao chegou ACK ou NACK
-      if(cont_tx_slot(t) == 1)
-        countSuccesTx = countSuccesTx + 1;
-        device(idxLastTx).packet = 0;
-      endif
-      for i = 1:numberDevices
-        if (device(i).battery < 1)
-          device(i).battery = device(i).battery + 0.2;
-          %device(i).energy = device(i).energy + n*(Ptx)*(Gt)*(Gr)*((c/4*pi*f*d0)^2)*((d0/du)^alpha) * T
-        endif
-      endfor
-    else
+    if(cont_tx_slot(t) == 1)
+      countSuccesTx = countSuccesTx + 1;
+      device(idxLastTx).packet = 0;
+    else if(cont_tx_slot(t) > 1)
       countFailTx = countFailTx + 1;
     endif
+
+    for i = 1:numberDevices
+      if (device(i).battery < 1)
+        device(i).battery = device(i).battery + 0.2;
+        %device(i).energy = device(i).energy + n*(Ptx)*(Gt)*(Gr)*((c/4*pi*f*d0)^2)*((d0/du)^alpha) * T
+      endif
+    endfor
+
   endfor
 
   res = cont_tx_slot;
-
 
 endfunction
 
