@@ -18,7 +18,7 @@ function res = simulation(numberDevices, arrivalRate, slots)
     device = packetGeneration(numberDevices, arrivalRate, device);
 
     for i = 1:numberDevices
-      if(device(i).packet == 1)
+      if(device(i).packet == 1 && device(i).battery == 1)
         device(i).battery = 0;
         idxLastTx = i;
         cont_tx_slot(t) = cont_tx_slot(t) + 1;
@@ -32,13 +32,16 @@ function res = simulation(numberDevices, arrivalRate, slots)
     if(cont_tx_slot(t) == 1)
       countSuccesTx = countSuccesTx + 1;
       device(idxLastTx).packet = 0;
-    else if(cont_tx_slot(t) > 1)
+    elseif(cont_tx_slot(t) > 1)
       countFailTx = countFailTx + 1;
     endif
 
     for i = 1:numberDevices
       if (device(i).battery < 1)
-        device(i).battery = device(i).battery + 0.2;
+        device(i).battery = device(i).battery + (0.04*randi([1,10]));
+        if (device(i).battery > 1)
+          device(i).battery = 1;
+        endif
         %device(i).energy = device(i).energy + n*(Ptx)*(Gt)*(Gr)*((c/4*pi*f*d0)^2)*((d0/du)^alpha) * T
       endif
     endfor
