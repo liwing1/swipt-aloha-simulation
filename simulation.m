@@ -2,7 +2,7 @@
 %chegada de pacotes no canal e número de slots
 function res = simulation(numberDevices, arrivalRate, slots)
   res = zeros(1,slots);
-  idxLastTx = 0;
+  idxLastTx = zeros(1, numberDevices);
   countSuccesTx = 0;
   countFailTx = 0;
   C = 0; % número de dispositivos descarregados
@@ -17,11 +17,12 @@ function res = simulation(numberDevices, arrivalRate, slots)
 
     device = packetGeneration(numberDevices, arrivalRate, device);
 
+    % Primeiro for -> Transmite pacotes
     for i = 1:numberDevices
       if(device(i).packet == 1 && device(i).battery == 1)
-        device(i).battery = 0;
-        idxLastTx = i;
         cont_tx_slot(t) = cont_tx_slot(t) + 1;
+        idxLastTx(cont_tx_slot(t)) = i;
+        device(i).battery = 0;
       %else
         %device(i).packet = packetGeneration(arrivalRate);
       endif
@@ -29,13 +30,15 @@ function res = simulation(numberDevices, arrivalRate, slots)
 
     C = C + cont_tx_slot(t);  %C = Total de transmissoes
 
+    % Verifica se o pacote transmite foi valido
     if(cont_tx_slot(t) == 1)
       countSuccesTx = countSuccesTx + 1;
-      device(idxLastTx).packet = 0;
+      device(idxLastTx(1)).packet = 0;
     elseif(cont_tx_slot(t) > 1)
       countFailTx = countFailTx + 1;
     endif
 
+    % Recarrega os dispositivos
     for i = 1:numberDevices
       if (device(i).battery < 1)
         device(i).battery = device(i).battery + (0.04*randi([1,10]));
@@ -46,6 +49,7 @@ function res = simulation(numberDevices, arrivalRate, slots)
       endif
     endfor
 
+  idxLastTx = zeros(1, numberDevices);
   endfor
 
   res = cont_tx_slot;
