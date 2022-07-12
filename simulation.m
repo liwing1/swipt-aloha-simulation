@@ -19,7 +19,7 @@ function res = simulation(numberDevices, arrivalRate, slots)
 
     % Primeiro for -> Transmite pacotes
     for i = 1:numberDevices
-      if(device(i).packet == 1 && device(i).battery == 1)
+      if(device(i).packet == 1 && device(i).battery == 1 && device(i).blocked == 0)
         cont_tx_slot(t) = cont_tx_slot(t) + 1;
         idxLastTx(cont_tx_slot(t)) = i;
         device(i).battery = 0;
@@ -36,6 +36,11 @@ function res = simulation(numberDevices, arrivalRate, slots)
       device(idxLastTx(1)).packet = 0;
     elseif(cont_tx_slot(t) > 1)
       countFailTx = countFailTx + 1;
+      for i = idxLastTx
+        if(i != 0)
+          device(i).blocked = 1;
+        endif
+      endfor
     endif
 
     % Recarrega os dispositivos
