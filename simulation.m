@@ -46,7 +46,8 @@ function res = simulation(numberDevices, arrivalRate, slots)
     % Recarrega os dispositivos
     for i = 1:numberDevices
       if (device(i).battery < 1)
-        device(i).battery = device(i).battery + (0.04*randi([1,10]));
+        %device(i).battery = device(i).battery + (0.02*randi([1,10]));
+        device(i).battery = device(i).battery + (0.05);
         if (device(i).battery > 1)
           device(i).battery = 1;
         endif
