@@ -58,7 +58,7 @@ function res = simulation(numberDevices, arrivalRate, slots)
   idxLastTx = zeros(1, numberDevices);
   endfor
 
-  res = cont_tx_slot;
+  res = countSuccesTx;
 
 endfunction
 
