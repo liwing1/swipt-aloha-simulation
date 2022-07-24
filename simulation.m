@@ -1,6 +1,6 @@
 %função principal que recebe como parâmetros: número de dispositivos, taxa de
 %chegada de pacotes no canal e número de slots
-function res = simulation(numberDevices, arrivalRate, slots)
+function res = simulation(numberDevices, arrivalRate, slots, rechargeRate)
   res = zeros(1,slots);
   idxLastTx = zeros(1, numberDevices);
   countSuccesTx = 0;
@@ -47,7 +47,7 @@ function res = simulation(numberDevices, arrivalRate, slots)
     for i = 1:numberDevices
       if (device(i).battery < 1)
         %device(i).battery = device(i).battery + (0.02*randi([1,10]));
-        device(i).battery = device(i).battery + (0.05);
+        device(i).battery = device(i).battery + (rechargeRate);
         if (device(i).battery > 1)
           device(i).battery = 1;
         endif
