@@ -1,4 +1,4 @@
-NUMBER_OF_SAMPLES = 20;
+NUMBER_OF_SAMPLES = 30;
 NUMBER_OF_MEAN = 5;
 
 sample = zeros(10, NUMBER_OF_SAMPLES);
@@ -17,7 +17,7 @@ for k = 1:3
 
     sample(k,i) /= NUMBER_OF_MEAN;
 
-    printf("k = %d; i = %d", k, i);
+    printf("k = %d; i = %2d\r\n", k, i);
 
   endfor
 
