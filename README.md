@@ -1,1 +1,1 @@
-# Otave simulation of a SWIPT Slotted-ALOHA Protocol
+# Octave simulation of a SWIPT Slotted-ALOHA Protocol

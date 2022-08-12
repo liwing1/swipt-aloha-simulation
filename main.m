@@ -1,5 +1,5 @@
 NUMBER_OF_SAMPLES = 30;
-NUMBER_OF_MEAN = 5;
+NUMBER_OF_MEAN = 2;
 
 sample = zeros(10, NUMBER_OF_SAMPLES);
 
@@ -12,12 +12,12 @@ for k = 1:3
   for i = 1:NUMBER_OF_SAMPLES
 
     for j = 1:NUMBER_OF_MEAN
-      sample(k,i) += (simulation(50, 0.1*i, 1000, 0.01*n(k)));
+      sample(k,i) += (simulation(50, 0.1*i, 100000, 0.01*n(k)));
     endfor
 
     sample(k,i) /= NUMBER_OF_MEAN;
 
-    printf("k = %d; i = %2d\r\n", k, i);
+    printf("k = %d; i = %02d\r\n", k, i);
 
   endfor
 
