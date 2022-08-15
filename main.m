@@ -12,7 +12,7 @@ for k = 1:3
   for i = 1:NUMBER_OF_SAMPLES
 
     for j = 1:NUMBER_OF_MEAN
-      sample(k,i) += (simulation(50, 0.1*i, 100000, 0.01*n(k)));
+      sample(k,i) += (simulation(200, 0.1*i, 100000, 0.01*n(k)));
     endfor
 
     sample(k,i) /= NUMBER_OF_MEAN;
@@ -29,7 +29,7 @@ h = legend("1", "5", "12");
 legend(h, "location", "southeast");
 xlabel("arrivalRate");
 ylabel("succesRate");
-title("Recharge Rate - 50 Devices");
+title("Recharge Rate - 200 Devices");
 
 % SIMULATE NUMBER DEVICES
 %{
