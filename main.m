@@ -4,7 +4,7 @@ NUMBER_OF_MEAN = 2;
 sample = zeros(10, NUMBER_OF_SAMPLES);
 
 % SIMULATE RECHARGE RATE
-
+%{
 n = [1;5;12];
 
 for k = 1:3
@@ -30,9 +30,9 @@ legend(h, "location", "southeast");
 xlabel("arrivalRate");
 ylabel("succesRate");
 title("Recharge Rate - 200 Devices");
-
+%}
 % SIMULATE NUMBER DEVICES
-%{
+
 n = [50;100;200];
 
 for k = 1:3
@@ -40,10 +40,12 @@ for k = 1:3
   for i = 1:NUMBER_OF_SAMPLES
 
     for j = 1:NUMBER_OF_MEAN
-      sample(k,i) += (simulation(n(k), 0.1*i, 1000, 0.1));
+      sample(k,i) += (simulation(n(k), 0.1*i, 1000, 1));
     endfor
 
     sample(k,i) /= NUMBER_OF_MEAN;
+
+    printf("k = %d; i = %02d\r\n", k, i);
 
   endfor
 
@@ -56,4 +58,4 @@ legend(h, "location", "southeast");
 xlabel("arrivalRate");
 ylabel("succesRate");
 title("Number of Devies")
-%}
+
