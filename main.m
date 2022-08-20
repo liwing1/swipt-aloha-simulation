@@ -40,7 +40,7 @@ for k = 1:3
   for i = 1:NUMBER_OF_SAMPLES
 
     for j = 1:NUMBER_OF_MEAN
-      sample(k,i) += (simulation(n(k), 0.1*i, 1000, 1));
+      sample(k,i) += (simulation(n(k), 0.1*i, 100000, 1));
     endfor
 
     sample(k,i) /= NUMBER_OF_MEAN;
